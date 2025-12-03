@@ -1,10 +1,23 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Collaboration from "@tiptap/extension-collaboration";
 import Toolbar from "./Toolbar";
+import * as Y from "yjs";
 
-export function RichTextEditor() {
+interface RichTextEditorProps {
+  ydoc: Y.Doc;
+}
+
+export function RichTextEditor(props: RichTextEditorProps) {
+  const { ydoc } = props;
+
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit,
+      Collaboration.configure({
+        document: ydoc,
+      }),
+    ],
     content: `
       <h1>Yet another collaborative text editor!</h1>
       <h2>It's December already????</h2>

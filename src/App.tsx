@@ -1,6 +1,10 @@
 import { RichTextEditor } from "@/components/RichTextEditor";
+import { useState } from "react";
+import { createYDoc } from "@/lib/yjs";
 
 function App() {
+  const [ydoc] = useState(() => createYDoc());
+
   return (
     <div className="min-h-screen min-w-screen bg-gray-50 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg">
@@ -11,7 +15,7 @@ function App() {
           Yet another collaborative text editor!
         </p>
         <main className="max-w-4xl mx-auto px-4 py-8 w-[50vw]">
-          <RichTextEditor />
+          <RichTextEditor ydoc={ydoc} />
         </main>
       </div>
     </div>
