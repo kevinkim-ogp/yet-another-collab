@@ -7,10 +7,22 @@ import {
   Heading2,
   Heading1,
   Heading3,
+  Undo,
+  Redo,
 } from "lucide-react";
-import { Editor } from "@tiptap/react";
+import { Editor, useEditorState } from "@tiptap/react";
 
 export default function Toolbar({ editor }: { editor: Editor }) {
+  const canUndo = useEditorState({
+    editor,
+    selector: ({ editor }) => editor.can().undo(),
+  });
+
+  const canRedo = useEditorState({
+    editor,
+    selector: ({ editor }) => editor.can().redo(),
+  });
+
   return (
     <div className="border-b bg-gray-50 p-2 flex gap-1">
       <Button
@@ -61,6 +73,23 @@ export default function Toolbar({ editor }: { editor: Editor }) {
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
       >
         <ListOrdered className="h-4 w-4" />
+      </Button>
+      <div className="w-px bg-gray-300 mx-1" />
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => editor.chain().focus().undo().run()}
+        disabled={!canUndo}
+      >
+        <Undo className="h-4 w-4" />
+      </Button>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => editor.chain().focus().redo().run()}
+        disabled={!canRedo}
+      >
+        <Redo className="h-4 w-4" />
       </Button>
     </div>
   );
