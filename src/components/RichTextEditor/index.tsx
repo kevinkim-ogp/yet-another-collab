@@ -8,6 +8,7 @@ import type { User } from "@/lib/yjs";
 
 import PartyKitProvider from "y-partykit/provider";
 import useYProvider from "y-partykit/react";
+import "./styles.css";
 
 interface RichTextEditorProps {
   ydoc: Y.Doc;
