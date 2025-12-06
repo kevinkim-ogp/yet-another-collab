@@ -52,7 +52,7 @@ export function getOrCreateUser(): User {
 export function createProvider(roomId: string, ydoc: Y.Doc) {
   const host = import.meta.env.DEV
     ? "localhost:1999" // Local dev - hostname only
-    : "yet-another-party.kevin-kim.xyz"; // deployed hostname
+    : "yet-another-collab.kevinkim-ogp.partykit.dev"; // deployed hostname
 
   const provider = new PartyKitProvider(host, roomId, ydoc, {
     connect: true,
