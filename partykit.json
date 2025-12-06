@@ -1,0 +1,6 @@
+{
+  "name": "yet-another-collab",
+  "main": "party/index.ts",
+  "port": 1999,
+  "compatibilityDate": "2025-12-06"
+}
