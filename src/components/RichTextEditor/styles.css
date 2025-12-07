@@ -77,9 +77,20 @@
   }
 
   /* Give a remote user a caret */
+  .collaboration-cursor__caret {
+    border-left: 2px solid;
+    border-right: 2px solid;
+    margin-left: -1px;
+    margin-right: -1px;
+    pointer-events: none;
+    position: relative;
+    word-break: normal;
+  }
+
+  /* Alternative class name */
   .collaboration-carets__caret {
-    border-left: 1px solid #0d0d0d;
-    border-right: 1px solid #0d0d0d;
+    border-left: 2px solid;
+    border-right: 2px solid;
     margin-left: -1px;
     margin-right: -1px;
     pointer-events: none;
@@ -88,9 +99,10 @@
   }
 
   /* Render the username above the caret */
+  .collaboration-cursor__label,
   .collaboration-carets__label {
     border-radius: 3px 3px 3px 0;
-    color: #0d0d0d;
+    color: #fff;
     font-size: 12px;
     font-style: normal;
     font-weight: 600;

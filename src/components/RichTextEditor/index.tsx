@@ -5,54 +5,44 @@ import CollaborationCaret from '@tiptap/extension-collaboration-caret'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import PartyKitProvider from 'y-partykit/provider'
-import useYProvider from 'y-partykit/react'
-import * as Y from 'yjs'
 
-import type { User } from '@/lib/yjs'
+import type { User } from '@/types'
 
 import Toolbar from './Toolbar'
 
 interface RichTextEditorProps {
-  ydoc: Y.Doc
   provider: PartyKitProvider
   user: User | null
 }
 
-export function RichTextEditor(props: RichTextEditorProps) {
-  const { ydoc, user } = props
-
-  const provider = useYProvider({
-    room: 'test',
-    // Don't pass doc - let useYProvider create its own
-  })
-
-  const editor = useEditor({
-    extensions: [
-      StarterKit.configure({
-        undoRedo: false, // use Yjs for history
-      }),
-      Collaboration.configure({
-        document: ydoc,
-      }),
-      CollaborationCaret.configure({
-        provider,
-        user: {
-          name: user?.name,
-          color: user?.color,
+export function RichTextEditor({ provider, user }: RichTextEditorProps) {
+  const editor = useEditor(
+    {
+      extensions: [
+        StarterKit.configure({
+          undoRedo: false, // use Yjs for history
+        }),
+        Collaboration.configure({
+          document: provider.doc,
+        }),
+        CollaborationCaret.configure({
+          provider,
+          user: {
+            name: user?.name ?? 'Anonymous',
+            color: user?.color ?? '#000000',
+          },
+        }),
+      ],
+      // Don't set content when using Collaboration - it comes from Yjs doc
+      editorProps: {
+        attributes: {
+          class:
+            'prose prose-sm max-w-none focus:outline-none min-h-[300px] p-4',
         },
-      }),
-    ],
-    content: `
-      <h1>Yet another collaborative text editor!</h1>
-      <h2>It's December already????</h2>
-      <p><strong>Time to get some learning done!</strong></p>
-    `,
-    editorProps: {
-      attributes: {
-        class: 'prose prose-sm max-w-none focus:outline-none min-h-[300px] p-4',
       },
     },
-  })
+    [provider.doc, user],
+  )
 
   if (!editor || !provider || !user) {
     return <div>Loading editor...</div>

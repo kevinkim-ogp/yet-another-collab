@@ -1,25 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
-
 import { RichTextEditor } from '@/components/RichTextEditor'
 
-import { createProvider, createYDoc } from './lib/yjs'
+import { createProvider, Y } from './lib/yjs'
 
 function App() {
-  const [ydoc] = useState(() => createYDoc())
-
-  // Create provider only once and ensure proper cleanup
-  const { provider, user } = useMemo(() => {
-    return createProvider('test', ydoc)
-  }, [ydoc])
-
-  // Cleanup provider on unmount
-  useEffect(() => {
-    return () => {
-      if (provider) {
-        provider.destroy()
-      }
-    }
-  }, [provider])
+  const doc = new Y.Doc()
+  const { provider, user } = createProvider('test', doc)
 
   return (
     <div className="min-h-screen min-w-screen bg-gray-50 flex items-center justify-center">
@@ -31,7 +16,7 @@ function App() {
           Yet another collaborative text editor!
         </p>
         <main className="max-w-4xl mx-auto px-4 py-8 w-[50vw]">
-          <RichTextEditor ydoc={ydoc} provider={provider} user={user} />
+          <RichTextEditor provider={provider} user={user} />
         </main>
       </div>
     </div>

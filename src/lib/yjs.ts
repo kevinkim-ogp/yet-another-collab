@@ -54,14 +54,12 @@ export function createProvider(roomId: string, ydoc: Y.Doc) {
     ? 'localhost:1999' // Local dev - hostname only
     : 'yet-another-collab.kevinkim-ogp.partykit.dev' // deployed hostname
 
+  const user = getOrCreateUser()
+
   const provider = new PartyKitProvider(host, roomId, ydoc, {
     connect: true,
     protocol: import.meta.env.DEV ? 'ws' : 'wss', // Use ws for local dev, wss for production
   })
-
-  // Set user info for presence
-  const user = getOrCreateUser()
-  provider.awareness.setLocalStateField('user', user)
 
   // Add connection status monitoring
   provider.on('status', (event: { status: string }) => {
@@ -70,6 +68,8 @@ export function createProvider(roomId: string, ydoc: Y.Doc) {
       console.warn('PartyKit disconnected - will attempt to reconnect')
     } else if (event.status === 'connected') {
       console.log('PartyKit connected successfully')
+    } else if (event.status === 'synced') {
+      console.log('PartyKit synced successfully')
     }
   })
 
