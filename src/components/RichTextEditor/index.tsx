@@ -8,6 +8,7 @@ import PartyKitProvider from 'y-partykit/provider'
 
 import type { User } from '@/types'
 
+import { PresenceAvatars } from './PresenceAvatars'
 import Toolbar from './Toolbar'
 
 interface RichTextEditorProps {
@@ -50,6 +51,9 @@ export function RichTextEditor({ provider, user }: RichTextEditorProps) {
 
   return (
     <div className="border rounded-lg overflow-hidden bg-white">
+      {/* Presence Avatars */}
+      <PresenceAvatars provider={provider} currentUser={user} />
+
       {/* Toolbar */}
       <Toolbar editor={editor} />
 
