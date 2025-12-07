@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { RichTextEditor } from '@/components/RichTextEditor'
@@ -5,9 +6,12 @@ import { createProvider, Y } from '@/lib/yjs'
 
 function Room() {
   const { id } = useParams()
-  const doc = new Y.Doc()
 
-  const { provider, user } = createProvider(id ?? 'test', doc)
+  const { provider, user } = useMemo(() => {
+    const doc = new Y.Doc()
+    const { provider, user } = createProvider(id ?? 'test', doc)
+    return { provider, user }
+  }, [id])
 
   return (
     <div className="min-h-screen min-w-screen bg-gray-50 flex items-center justify-center">
