@@ -1,23 +1,25 @@
-import { RichTextEditor } from "@/components/RichTextEditor";
-import { useEffect, useState, useMemo } from "react";
-import { createYDoc, createProvider } from "./lib/yjs";
+import { useEffect, useMemo, useState } from 'react'
+
+import { RichTextEditor } from '@/components/RichTextEditor'
+
+import { createProvider, createYDoc } from './lib/yjs'
 
 function App() {
-  const [ydoc] = useState(() => createYDoc());
+  const [ydoc] = useState(() => createYDoc())
 
   // Create provider only once and ensure proper cleanup
   const { provider, user } = useMemo(() => {
-    return createProvider("test", ydoc);
-  }, [ydoc]);
+    return createProvider('test', ydoc)
+  }, [ydoc])
 
   // Cleanup provider on unmount
   useEffect(() => {
     return () => {
       if (provider) {
-        provider.destroy();
+        provider.destroy()
       }
-    };
-  }, [provider]);
+    }
+  }, [provider])
 
   return (
     <div className="min-h-screen min-w-screen bg-gray-50 flex items-center justify-center">
@@ -33,7 +35,7 @@ function App() {
         </main>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
